@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Trainer Management</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div th:if="${successMessage}" class="toast success" th:text="${successMessage}"></div>
+<div th:if="${errorMessage}" class="toast error" th:text="${errorMessage}"></div>
+
+<div class="page-container">
+
+  <div class="page-header">
+    <div>
+      <span class="section-badge">TRAINER MANAGEMENT</span>
+      <h2>Trainer List</h2>
+      <p>View, edit and manage all gym trainers.</p>
+    </div>
+
+    <div class="header-actions">
+      <a th:href="@{/members}" class="main-btn secondary-btn">Member Management</a>
+      <a th:href="@{/trainers/add}" class="main-btn">+ Add Trainer</a>
+    </div>
+  </div>
+
+  <div class="table-card">
+    <table>
+      <thead>
+      <tr>
+        <th>Trainer ID</th>
+        <th>Name</th>
+        <th>NIC</th>
+        <th>Phone</th>
+        <th>Email</th>
+        <th>Gender</th>
+        <th>Join Date</th>
+        <th>Status</th>
+        <th>Level</th>
+        <th>Experience</th>
+        <th>Role</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr th:each="trainer : ${trainers}">
+        <td th:text="${trainer.trainerId}"></td>
+        <td th:text="${trainer.name}"></td>
+        <td th:text="${trainer.nic}"></td>
+        <td th:text="${trainer.phone}"></td>
+        <td th:text="${trainer.email}"></td>
+        <td th:text="${trainer.gender}"></td>
+        <td th:text="${trainer.joinDate}"></td>
+        <td>
+          <span class="status-pill" th:text="${trainer.status}"></span>
+        </td>
+        <td>
+          <span class="type-badge" th:text="${trainer.level}"></span>
+        </td>
+        <td th:text="${trainer.yearsOfExperience + ' years'}"></td>
+        <td th:text="${trainer.role}"></td>
+        <td class="action-buttons">
+          <a th:href="@{/trainers/edit/{id}(id=${trainer.trainerId})}" class="edit-btn">Edit</a>
+
+          <a th:href="@{/trainers/delete/{id}(id=${trainer.trainerId})}"
+             class="delete-btn"
+             onclick="return confirm('Delete this trainer?')">
+            Delete
+          </a>
+        </td>
+      </tr>
+
+      <tr th:if="${#lists.isEmpty(trainers)}">
+        <td colspan="12" class="empty-row">No trainers found.</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <a th:href="@{/}" class="back-link">← Back to Home</a>
+
+</div>
+
+<script th:src="@{/js/script.js}"></script>
+</body>
+</html>
