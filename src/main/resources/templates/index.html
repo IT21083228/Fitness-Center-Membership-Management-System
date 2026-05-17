@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Fitness Membership Management</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<div class="hero-section">
+
+    <div class="overlay"></div>
+
+    <div class="hero-content">
+
+        <div class="logo-badge">
+            FITNESS PRO
+        </div>
+
+        <h1>
+            Fitness Membership <br>
+            Management System
+        </h1>
+
+        <p>
+            Manage members, trainers and memberships
+            with a modern gym management platform.
+        </p>
+
+        <div class="menu">
+
+            <a th:href="@{/members}" class="btn">Member Management</a>
+            <a th:href="@{/trainers}" class="btn">Trainer Management</a>
+
+            <a th:href="@{/classes}" class="btn secondary">Class Management</a>
+            <a th:href="@{/classes/assign}" class="btn secondary">Class Assignment</a>
+
+            <!--  <a th:href="@{/classes}" class="btn secondary">Fitness Class Management</a>
+              <a th:href="@{/classes/status}" class="btn secondary">Class Schedule & Status</a>-->
+
+
+            <!--          <a th:href="@{/plans}" class="btn secondary">Membership Plans</a>
+
+                      <a th:href="@{/payments}" class="btn secondary">Payment Management</a>-->
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

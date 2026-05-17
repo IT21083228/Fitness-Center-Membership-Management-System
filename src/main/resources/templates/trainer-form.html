@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Add / Edit Trainer</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<div th:if="${errorMessage}" class="toast error" th:text="${errorMessage}"></div>
+
+<div class="form-page">
+  <div class="form-card">
+
+    <div class="form-header">
+      <span class="section-badge">TRAINER FORM</span>
+
+      <h2 th:text="${trainer.trainerId == null || trainer.trainerId == ''} ? 'Add Trainer' : 'Edit Trainer'">
+        Add Trainer
+      </h2>
+
+      <p>Enter trainer details with valid NIC, phone, email and join date.</p>
+    </div>
+
+    <form th:action="@{/trainers/save}" th:object="${trainer}" method="post">
+
+      <input type="hidden" th:field="*{trainerId}">
+
+      <div class="form-grid">
+
+        <div class="input-group">
+          <label>Name</label>
+          <input type="text" th:field="*{name}" required>
+        </div>
+
+        <div class="input-group">
+          <label>NIC</label>
+          <input type="text" th:field="*{nic}" placeholder="991234567V or 199912345678" required>
+        </div>
+
+        <div class="input-group">
+          <label>Phone</label>
+          <input type="text" th:field="*{phone}" placeholder="0771234567" required>
+        </div>
+
+        <div class="input-group">
+          <label>Email</label>
+          <input type="email" th:field="*{email}" required>
+        </div>
+
+        <div class="input-group">
+          <label>Gender</label>
+          <select th:field="*{gender}" required>
+            <option value="">Select gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label>Join Date</label>
+          <input type="date" th:field="*{joinDate}" required>
+        </div>
+
+        <div class="input-group">
+          <label>Status</label>
+          <select th:field="*{status}" required>
+            <option value="">Select status</option>
+            <option value="Available">Available</option>
+            <option value="Not Available">Not Available</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label>Level</label>
+          <select th:field="*{level}" required>
+            <option value="">Select level</option>
+            <option value="Junior Level">Junior Level</option>
+            <option value="Senior Level">Senior Level</option>
+            <option value="Expert Level">Expert Level</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label>Years of Experience</label>
+          <input type="number" th:field="*{yearsOfExperience}" min="0" required>
+        </div>
+
+      </div>
+
+      <div class="input-group">
+        <label>Address</label>
+        <textarea th:field="*{address}" required></textarea>
+      </div>
+
+      <div class="form-actions">
+        <a th:href="@{/trainers}" class="cancel-btn">Cancel</a>
+        <button type="submit" class="main-btn">Save Trainer</button>
+      </div>
+
+    </form>
+
+  </div>
+</div>
+
+<script th:src="@{/js/script.js}"></script>
+</body>
+</html>
