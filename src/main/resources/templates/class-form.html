@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Create Class</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div th:if="${errorMessage}" class="toast error" th:text="${errorMessage}"></div>
+
+<div class="form-page">
+  <div class="form-card">
+
+    <div class="form-header">
+      <span class="section-badge">CLASS FORM</span>
+      <h2 th:text="${gymClass.classId == null || gymClass.classId == ''} ? 'Create Class' : 'Edit Class'"></h2>
+      <p>Select an available trainer and create a class session.</p>
+    </div>
+
+    <form th:action="@{/classes/save}" th:object="${gymClass}" method="post">
+
+      <input type="hidden" th:field="*{classId}">
+      <input type="hidden" th:field="*{availableSlots}">
+
+      <div class="form-grid">
+
+        <div class="input-group">
+          <label>Trainer</label>
+          <select th:field="*{trainerId}" required>
+            <option value="">Select available trainer</option>
+            <option th:each="trainer : ${availableTrainers}"
+                    th:value="${trainer.trainerId}"
+                    th:text="${trainer.trainerId + ' - ' + trainer.name + ' (' + trainer.level + ')'}">
+            </option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label>Class Type</label>
+          <select th:field="*{classType}" required>
+            <option value="">Select class type</option>
+            <option value="Cardio">Cardio</option>
+            <option value="Yoga">Yoga</option>
+            <option value="Zumba">Zumba</option>
+            <option value="Strength Training">Strength Training</option>
+            <option value="CrossFit">CrossFit</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label>Date & Time</label>
+          <input type="datetime-local" th:field="*{dateTime}" required>
+        </div>
+
+        <div class="input-group">
+          <label>Duration Minutes</label>
+          <input type="number" th:field="*{duration}" min="1" required>
+        </div>
+
+        <div class="input-group">
+          <label>Total Slots</label>
+          <input type="number" th:field="*{totalSlots}" min="1" max="10" required>
+        </div>
+
+        <div class="input-group">
+          <label>Status</label>
+          <select th:field="*{status}" required>
+            <option value="Scheduled">Scheduled</option>
+            <option value="Ongoing">Ongoing</option>
+            <option value="Pending">Pending</option>
+            <option value="Cancelled">Cancelled</option>
+            <option value="Completed">Completed</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="form-actions">
+        <a th:href="@{/classes}" class="cancel-btn">Cancel</a>
+        <button type="submit" class="main-btn">Save Class</button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<script th:src="@{/js/script.js}"></script>
+</body>
+</html>
