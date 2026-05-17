@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Class Management</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div th:if="${successMessage}" class="toast success" th:text="${successMessage}"></div>
+
+<div class="page-container">
+
+  <div class="page-header">
+    <div>
+      <span class="section-badge">CLASS MANAGEMENT</span>
+      <h2>Created Classes</h2>
+      <p>View all created classes, trainer details, slots and status.</p>
+    </div>
+
+    <div class="header-actions">
+      <a th:href="@{/classes/assign}" class="main-btn secondary-btn">Assign Members</a>
+      <a th:href="@{/classes/add}" class="main-btn">+ Create Class</a>
+    </div>
+  </div>
+
+  <form th:action="@{/classes}" method="get" class="search-box">
+    <input type="text" name="keyword" placeholder="Search by trainer, class type or ID" th:value="${keyword}">
+    <button type="submit">Search</button>
+    <a th:href="@{/classes}" class="clear-btn">Clear</a>
+  </form>
+
+  <div class="class-grid">
+    <div class="class-card" th:each="gymClass : ${classes}">
+      <div class="class-card-top">
+        <span class="type-badge" th:text="${gymClass.classType}"></span>
+        <span class="status-pill" th:text="${gymClass.status}"></span>
+      </div>
+
+      <h3 th:text="${gymClass.classType + ' Session'}"></h3>
+
+      <p th:text="'Trainer: ' + ${gymClass.trainerName}"></p>
+      <p th:text="'Date & Time: ' + ${gymClass.dateTime}"></p>
+      <p th:text="'Duration: ' + ${gymClass.duration} + ' minutes'"></p>
+      <p th:text="'Slots: ' + ${gymClass.availableSlots} + '/' + ${gymClass.totalSlots}"></p>
+      <p th:text="'Session Type: ' + ${gymClass.sessionType}"></p>
+
+      <div class="action-buttons">
+        <a th:href="@{/classes/assign(classId=${gymClass.classId})}" class="view-btn">Assign</a>
+        <a th:href="@{/classes/edit/{id}(id=${gymClass.classId})}" class="edit-btn">Edit</a>
+        <a th:href="@{/classes/delete/{id}(id=${gymClass.classId})}"
+           class="delete-btn"
+           onclick="return confirm('Delete this class?')">Delete</a>
+      </div>
+    </div>
+
+    <div th:if="${#lists.isEmpty(classes)}" class="empty-card">
+      No classes found.
+    </div>
+  </div>
+
+  <a th:href="@{/}" class="back-link">← Back to Home</a>
+
+</div>
+
+<script th:src="@{/js/script.js}"></script>
+</body>
+</html>

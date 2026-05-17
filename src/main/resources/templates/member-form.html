@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add / Edit Member</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<div th:if="${errorMessage}" class="toast error" th:text="${errorMessage}"></div>
+
+<div class="form-page">
+    <div class="form-card">
+
+        <div class="form-header">
+            <span class="section-badge">MEMBER FORM</span>
+            <h2 th:text="${member.memberId == null || member.memberId == ''} ? 'Add Member' : 'Edit Member'">
+                Add Member
+            </h2>
+            <p>Enter member details with valid NIC, phone, email and join date.</p>
+        </div>
+
+        <form th:action="@{/members/save}" th:object="${member}" method="post">
+
+            <input type="hidden" th:field="*{memberId}">
+
+            <div class="form-grid">
+
+                <div class="input-group">
+                    <label>Name</label>
+                    <input type="text" th:field="*{name}" required>
+                </div>
+
+                <div class="input-group">
+                    <label>NIC</label>
+                    <input type="text" th:field="*{nic}" placeholder="991234567V or 199912345678" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Phone</label>
+                    <input type="text" th:field="*{phone}" placeholder="0771234567" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Email</label>
+                    <input type="email" th:field="*{email}" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Gender</label>
+                    <select th:field="*{gender}" required>
+                        <option value="">Select gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Join Date</label>
+                    <input type="date" th:field="*{joinDate}" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Status</label>
+                    <select th:field="*{status}" required>
+                        <option value="">Select status</option>
+                        <option value="Active">Active</option>
+                        <option value="Inactive">Inactive</option>
+                        <option value="Suspended">Suspended</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Package</label>
+                    <select th:field="*{packageType}" required>
+                        <option value="">Select package</option>
+                        <option value="Standard">Standard</option>
+                        <option value="Silver">Silver</option>
+                        <option value="Gold">Gold</option>
+                        <option value="Premium">Premium</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="input-group">
+                <label>Address</label>
+                <textarea th:field="*{address}" required></textarea>
+            </div>
+
+            <div class="form-actions">
+                <a th:href="@{/members}" class="cancel-btn">Cancel</a>
+                <button type="submit" class="main-btn">Save Member</button>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+<script th:src="@{/js/script.js}"></script>
+</body>
+</html>

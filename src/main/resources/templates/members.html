@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Member Management</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<div th:if="${successMessage}" class="toast success" th:text="${successMessage}"></div>
+<div th:if="${errorMessage}" class="toast error" th:text="${errorMessage}"></div>
+
+<div class="page-container">
+
+    <div class="page-header">
+        <div>
+            <span class="section-badge">MEMBER MANAGEMENT</span>
+            <h2>Member List</h2>
+            <p>View, search, edit and delete registered gym members.</p>
+        </div>
+
+        <div class="header-actions">
+            <a th:href="@{/trainers}" class="main-btn secondary-btn">Trainer Management</a>
+            <a th:href="@{/members/add}" class="main-btn">+ Add Member</a>
+        </div>
+    </div>
+
+    <form th:action="@{/members}" method="get" class="search-box">
+        <input type="text" name="keyword" placeholder="Search by ID, name or NIC" th:value="${keyword}">
+        <button type="submit">Search</button>
+        <a th:href="@{/members}" class="clear-btn">Clear</a>
+    </form>
+
+    <div class="table-wrapper">
+        <div class="table-card">
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>NIC</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Gender</th>
+                    <th>Join Date</th>
+                    <th>Status</th>
+                    <th>Package</th>
+                    <th>Role</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="member : ${members}">
+                    <td th:text="${member.memberId}"></td>
+                    <td th:text="${member.name}"></td>
+                    <td th:text="${member.nic}"></td>
+                    <td th:text="${member.phone}"></td>
+                    <td th:text="${member.email}"></td>
+                    <td th:text="${member.gender}"></td>
+                    <td th:text="${member.joinDate}"></td>
+                    <td>
+                        <span class="status-pill" th:text="${member.status}"></span>
+                    </td>
+                    <td>
+                        <span class="type-badge" th:text="${member.packageType}"></span>
+                    </td>
+                    <td th:text="${member.role}"></td>
+                    <td class="action-buttons">
+                        <a th:href="@{/members/edit/{id}(id=${member.memberId})}" class="edit-btn">Edit</a>
+                        <a th:href="@{/members/delete/{id}(id=${member.memberId})}"
+                           class="delete-btn"
+                           onclick="return confirm('Delete this member?')">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+
+                <tr th:if="${#lists.isEmpty(members)}">
+                    <td colspan="11" class="empty-row">No members found.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <a th:href="@{/}" class="back-link">← Back to Home</a>
+
+</div>
+
+<script th:src="@{/js/script.js}"></script>
+</body>
+</html>
