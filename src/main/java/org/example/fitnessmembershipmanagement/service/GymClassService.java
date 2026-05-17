@@ -1,4 +1,4 @@
-package org.example.fitnessmembershipmanagement;
+package org.example.fitnessmembershipmanagement.service;
 
 import org.example.fitnessmembershipmanagement.model.GymClass;
 import org.springframework.stereotype.Service;
