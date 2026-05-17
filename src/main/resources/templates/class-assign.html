@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Assign Members</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div th:if="${successMessage}" class="toast success" th:text="${successMessage}"></div>
+<div th:if="${errorMessage}" class="toast error" th:text="${errorMessage}"></div>
+
+<div class="page-container">
+
+  <div class="page-header">
+    <div>
+      <span class="section-badge">CLASS ASSIGNMENT</span>
+      <h2>Assign Members to Classes</h2>
+      <p>Select a session card and assign available members.</p>
+    </div>
+
+    <a th:href="@{/classes}" class="main-btn secondary-btn">Class List</a>
+  </div>
+
+  <div class="class-grid">
+    <div class="class-card" th:each="gymClass : ${classes}">
+      <div class="class-card-top">
+        <span class="type-badge" th:text="${gymClass.classType}"></span>
+        <span class="status-pill" th:text="${gymClass.status}"></span>
+      </div>
+
+      <h3 th:text="${gymClass.classType + ' Session'}"></h3>
+      <p th:text="'Trainer: ' + ${gymClass.trainerName}"></p>
+      <p th:text="'Date & Time: ' + ${gymClass.dateTime}"></p>
+      <p th:text="'Available Slots: ' + ${gymClass.availableSlots}"></p>
+
+      <a th:href="@{/classes/assign(classId=${gymClass.classId})}" class="main-btn">View / Assign</a>
+    </div>
+  </div>
+
+  <div th:if="${selectedClass != null}" class="form-card assignment-box">
+    <h2 th:text="'Assign Member - ' + ${selectedClass.classType}"></h2>
+
+    <form th:action="@{/classes/assign}" method="post">
+      <input type="hidden" name="classId" th:value="${selectedClass.classId}">
+
+      <div class="form-grid">
+        <div class="input-group">
+          <label>Select Member</label>
+          <select name="memberId" required>
+            <option value="">Select member</option>
+            <option th:each="member : ${members}"
+                    th:value="${member.memberId}"
+                    th:text="${member.memberId + ' - ' + member.name + ' (' + member.packageType + ')'}">
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="main-btn">Assign Member</button>
+      </div>
+    </form>
+
+    <div class="assigned-members-section">
+      <h3>Assigned Members</h3>
+
+      <div class="assigned-table-wrapper">
+        <div class="table-card assigned-table-card">
+          <table class="assigned-table">
+            <thead>
+            <tr>
+              <th>Assignment ID</th>
+              <th>Member ID</th>
+              <th>Member Name</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="assignment : ${assignments}">
+              <td th:text="${assignment.assignmentId}"></td>
+              <td th:text="${assignment.memberId}"></td>
+              <td th:text="${assignment.memberName}"></td>
+            </tr>
+
+            <tr th:if="${#lists.isEmpty(assignments)}">
+              <td colspan="3" class="empty-row">No members assigned yet.</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  <a th:href="@{/}" class="back-link">← Back to Home</a>
+
+</div>
+
+<script th:src="@{/js/script.js}"></script>
+</body>
+</html>
